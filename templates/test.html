@@ -1,0 +1,40 @@
+{% extends 'base.html'%}
+{%block title%}
+{%endblock%}
+
+
+{%block body%}
+<form class="zadhig"> {{fullname[0][0]}}
+
+    {% if request.cookies.get('login') %} <a href="/login">Войти</a> {% else %}
+    <a href="/logout">Выйти</a>{% endif %}
+    <a href="/urm">Ваши УРМы</a>
+    <a href="/mark">Ваши показатели</a>
+    <div>
+        <button id="jsfetch">fetch json</button>
+    </div>
+{%endblock%}
+
+
+    <!--<tr>
+    <th>/</th>
+    <th>{{indicator[0][0]}}</th>
+    <th>{{indicator[1]}}</th>
+    <th>Q3</th>
+    <th>Q4</th>
+    </tr>
+    <tr>
+
+    <td>{{servises[0]}}</td>
+    <td class="js-servise-value" data-id="id">20.3</td>
+    <td>30.5</td>
+    <td>23.5</td>
+    <td>40.3</td>
+    </tr>
+    <tr>
+    <td>{{indicator[1]}}</td>
+    <td>50.2</td>
+    <td>40.63</td>
+    <td>45.23</td>
+    <td>39.3</td>
+    </tr>-->

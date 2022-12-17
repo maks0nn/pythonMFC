@@ -1,0 +1,33 @@
+{% extends 'base.html'%}
+{%block title%}
+
+{%endblock%}
+
+{%block body%}
+<form class="register" method="post" name="form_reg">
+    <h1 title="Регистрация">Регистрация</h1>
+
+    <div>
+        <input type="text" name="login" placeholder="логин">
+    </div>
+    <div>
+        <input type="text" name="fullname" placeholder="ФИО">
+    </div>
+
+    <div>
+        <input type="text" name="password" placeholder="Пароль">
+    </div>
+
+    <div>
+        <input type="text" name="repeat_password" placeholder="Повтори пароль">
+    </div>
+    <div class="group">
+        <button>Регистрация</button>
+    </div>
+    <p class="lead">{{ mes }}</p>
+    <div class="group">
+        <a class="click-me" href="/login">Вход в учетную запись</a>
+
+    </div>
+</form>
+{%endblock%}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{%block title%}
+{%endblock%}
+
+{%block body%}
+
+<form class= "login" method="post">
+    <h1 title="логин">Вход</h1>
+    <div>
+        <input type="text" name="login" placeholder="логин">
+    </div>
+    <div>
+        <input type="text" name="password" placeholder="пароль">
+    </div>
+    <div>
+        <button>Вход</button>
+    </div>
+    <p class="lead">{{ mes }}</p>
+
+    <div class="group">
+        <a class="click-me" href="/register">Регистрация</a>
+
+    </div>
+</form>
+
+</form>
+
+{%endblock%}

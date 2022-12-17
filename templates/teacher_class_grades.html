@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+{% endblock %}
+
+{% block body %}
+
+
+
+  <input type="hidden" id="a" value="{{ grade_scale.a_b }}">
+  <input type="hidden" id="b" value="{{ grade_scale.b_c }}">
+  <input type="hidden" id="c" value="{{ grade_scale.c_d }}">
+  <input type="hidden" id="d" value="{{ grade_scale.d_f }}">
+
+
+  <div id="weights">
+    {% for i in range(1, 9) %}
+      {% if grade_factor['category' ~ i ~ '_name'] is not none %}
+        <input type="hidden" id="category_{{ i }}_weight" value="{{ grade_factor['category' ~ i ~ '_weight'] }}">
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div id="drop">
+    {% for i in range(1, 9) %}
+      {% if grade_factor['category' ~ i ~ '_name'] is not none %}
+        <input type="hidden" id="category_{{ i }}_drop" value="{{ grade_factor['category' ~ i ~ '_drop'] }}">
+      {% endif %}
+    {% endfor %}
+  </div>
+
+
+  <div class="grades">
+    <div class="inner dragscroll">
+      <table class="table table-striped">
+        <thead>
+          <tr class="name-row">
+            <th class="first">&nbsp;</th>
+            <td class="total">Total</td>
+            {% for assignment in assignments %}
+              <td id="assignment_{{ assignment.id }}_name" class="assignment_{{ assignment.id }}">{{ assignment.assignment_name }}</td>
+            {% endfor %}
+            <td>&nbsp;</td>
+            <td id="new_name" class="new"> </td>
+          </tr>
+          <tr class="button-row">
+            <th class="first"></th>
+            <td class="total"><button class="btn btn-primary" onclick="showGraph(this)"><i class="far fa-chart-bar"></i></button></td>
+            {% for assignment in assignments %}
+              <td class="assignment_{{ assignment.id }}"><button class="btn btn-primary" onclick="showGraph(this)"><i class="far fa-chart-bar"></i></button> <button class="btn btn-primary" onclick="edit(this)"><i class="far fa-edit"></i></button></td>
+            {% endfor %}
+            <td>&nbsp;</td>
+            <th id="add-new" class="new"><button class="btn btn-primary" onclick="newAssignment(this)"><i class="fas fa-plus-circle"></i></button></th>
+          </tr>
+          <tr class="date-row">
+            <th class="first">Date Due</th>
+            <td class="total"></td>
+            {% for assignment in assignments %}
+              <td id="assignment_{{ assignment.id }}_date" class="assignment_{{ assignment.id }}">{{ assignment.assignment_date }}</td>
+            {% endfor %}
+            <td>&nbsp;</td>
+            <td id="new_date" class="new"> </td>
+          </tr>
+          <tr class="category-row">
+            <th class="first">Category</th>
+            <td class="total"></td>
+            {% for assignment in assignments %}
+              <td id="assignment_{{ assignment.id }}_category" class="assignment_{{ assignment.id }}"><input type="hidden" id="assignment_{{ assignment.id }}_category_num" value="{{ assignment.assignment_type }}">{{ grade_factor['category' ~ assignment.assignment_type ~ '_name'] }}</td>
+            {% endfor %}
+            <td>&nbsp;</td>
+            <td id="new_category" class="new"> </td>
+          </tr>
+          <tr class="pts-row">
+            <th class="first">Pts Possible</th>
+            <td class="total"></td>
+            {% for assignment in assignments %}
+              <td id="assignment_{{ assignment.id }}_points" class="assignment_{{ assignment.id }}">{{ assignment.total_points }}</td>
+            {% endfor %}
+            <td>&nbsp;</td>
+            <td id="new_points" class="new"> </td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in students %}
+          <tr class="num-row">
+            <th class="first">{{ student.first_name }} {{ student.last_name }}</th>
+            <td class="total"><span id="student_{{ student.id }}_letter"></span>&nbsp;<span id="student_{{ student.id }}_grade" class="student_grade_totals"></span></td>
+            {% for assignment in assignments %}
+              {% for assignment_result in assignment_results[student.id] if assignment_result.assignment_id == assignment.id%}
+                <td id="student_{{ student.id }}_assignment_{{ assignment.id }}_points" class="assignment_{{ assignment.id }}">{{ assignment_result.points_earned }}</td>
+              {% else %}
+                <td id="student_{{ student.id }}_assignment_{{ assignment.id }}_points" class="assignment_{{ assignment.id }}"></td>
+              {% endfor %}
+            {% endfor %}
+            <td>&nbsp;</td>
+            <td id="student_{{ student.id }}_new_points" class="new">&nbsp;</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+  <script src="{{ url_for('static', filename='dragscroll/dragscroll.js') }}"></script>
+  <script src="{{ url_for('static', filename='teacher_class_grades.js') }}"></script>
+{% endblock %}
