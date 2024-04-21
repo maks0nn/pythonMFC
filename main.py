@@ -10,7 +10,7 @@ STATIC_DIR = os.path.abspath('../static')
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-
+#lmlmlmllmml
 
 @app.route('/register', methods=["POST", "GET"])
 def register_user():
